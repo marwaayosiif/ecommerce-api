@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+             
+             <persistence-unit name="restful" transaction-type="RESOURCE_LOCAL">
+                 <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+                 <properties>
+                     <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/rest_soap_api"/>
+                     <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+                     <property name="jakarta.persistence.jdbc.user" value="project"/>
+                     <property name="jakarta.persistence.jdbc.password" value=""/>
+                     <property name="hibernate.show_sql" value="true"/>
+                     <property name="hibetnate.format_sql" value="true"/>
+                     <property name="dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+                     <property name="hibernate.hbm2ddl.auto" value="update"/>
+                    </properties>
+                </persistence-unit>
+                
+
+
+</persistence>

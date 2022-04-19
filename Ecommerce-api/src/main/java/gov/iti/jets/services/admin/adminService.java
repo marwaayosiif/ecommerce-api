@@ -7,7 +7,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("admins")
-public class adminService {
+public class AdminService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllAdmins() {
