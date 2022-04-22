@@ -1,6 +1,6 @@
 package gov.iti.jets.entity;
 // default package
-// Generated Apr 19, 2022, 11:05:40 PM by Hibernate Tools 6.0.0.Beta2
+// Generated Apr 21, 2022, 7:21:18 AM by Hibernate Tools 6.0.0.Beta2
 
 
 import jakarta.persistence.Column;
@@ -31,20 +31,20 @@ public class Product  implements java.io.Serializable {
      private Clerk clerk;
      private String name;
      private Double price;
-     private Set<Order> orders = new HashSet<Order>(0);
      private Set<Shoppingcart> shoppingcarts = new HashSet<Shoppingcart>(0);
-     private Set<Category> categories = new HashSet<Category>(0);
+     private Set<Order> orders = new HashSet<Order>(0);
+     private Set<Categories> categorieses = new HashSet<Categories>(0);
 
     public Product() {
     }
 
-    public Product(Clerk clerk, String name, Double price, Set<Order> orders, Set<Shoppingcart> shoppingcarts, Set<Category> categories) {
+    public Product(Clerk clerk, String name, Double price, Set<Shoppingcart> shoppingcarts, Set<Order> orders, Set<Categories> categorieses) {
        this.clerk = clerk;
        this.name = name;
        this.price = price;
-       this.orders = orders;
        this.shoppingcarts = shoppingcarts;
-       this.categories = categories;
+       this.orders = orders;
+       this.categorieses = categorieses;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -90,18 +90,6 @@ public class Product  implements java.io.Serializable {
     }
 
 @ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="order_product", catalog="rest_soap_api", joinColumns = { 
-        @JoinColumn(name="pro_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
-        @JoinColumn(name="ord_id", nullable=false, updatable=false) })
-    public Set<Order> getOrders() {
-        return this.orders;
-    }
-    
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
-    }
-
-@ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="shoppingcart_product", catalog="rest_soap_api", joinColumns = { 
         @JoinColumn(name="produ_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="shopping_id", nullable=false, updatable=false) })
@@ -114,15 +102,27 @@ public class Product  implements java.io.Serializable {
     }
 
 @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name="order_product", catalog="rest_soap_api", joinColumns = { 
+        @JoinColumn(name="pro_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
+        @JoinColumn(name="ord_id", nullable=false, updatable=false) })
+    public Set<Order> getOrders() {
+        return this.orders;
+    }
+    
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+@ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="product_category", catalog="rest_soap_api", joinColumns = { 
         @JoinColumn(name="produc_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="categ_id", nullable=false, updatable=false) })
-    public Set<Category> getCategories() {
-        return this.categories;
+    public Set<Categories> getCategorieses() {
+        return this.categorieses;
     }
     
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategorieses(Set<Categories> categorieses) {
+        this.categorieses = categorieses;
     }
 
 

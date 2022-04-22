@@ -11,7 +11,7 @@
                      <property name="jakarta.persistence.jdbc.user" value="api"/>
                      <property name="jakarta.persistence.jdbc.password" value=""/>
                      <property name="hibernate.show_sql" value="true"/>
-                     <property name="hibetnate.format_sql" value="true"/>
+                     <property name="hibernate.format_sql" value="true"/>
                      <property name="dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
                      <property name="hibernate.hbm2ddl.auto" value="update"/>
                     </properties>

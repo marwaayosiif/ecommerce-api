@@ -1,6 +1,6 @@
 package gov.iti.jets.entity;
 // default package
-// Generated Apr 19, 2022, 11:05:40 PM by Hibernate Tools 6.0.0.Beta2
+// Generated Apr 21, 2022, 7:21:18 AM by Hibernate Tools 6.0.0.Beta2
 
 
 import jakarta.persistence.Column;
@@ -28,17 +28,17 @@ public class Clerk  implements java.io.Serializable {
 
      private Integer id;
      private Admin admin;
-     private String name;
      private String email;
+     private String name;
      private Set<Product> products = new HashSet<Product>(0);
 
     public Clerk() {
     }
 
-    public Clerk(Admin admin, String name, String email, Set<Product> products) {
+    public Clerk(Admin admin, String email, String name, Set<Product> products) {
        this.admin = admin;
-       this.name = name;
        this.email = email;
+       this.name = name;
        this.products = products;
     }
    
@@ -65,16 +65,6 @@ public class Clerk  implements java.io.Serializable {
     }
 
     
-    @Column(name="name", length=100)
-    public String getName() {
-        return this.name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    
     @Column(name="email", length=100)
     public String getEmail() {
         return this.email;
@@ -82,6 +72,16 @@ public class Clerk  implements java.io.Serializable {
     
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    
+    @Column(name="name", length=100)
+    public String getName() {
+        return this.name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="clerk")

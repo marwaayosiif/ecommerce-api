@@ -36,15 +36,15 @@
     <dependency>
       <groupId>jakarta.xml.ws</groupId>
       <artifactId>jakarta.xml.ws-api</artifactId>
-      <version>3.0.1</version>
+      <version>3.0.0</version>
       <scope>compile</scope>
 
     </dependency>
 
 
     <dependency>
-      <groupId>org.glassfish.metro</groupId>
-      <artifactId>webservices-rt</artifactId>
+      <groupId>com.sun.xml.ws</groupId>
+      <artifactId>jaxws-rt</artifactId>
       <version>3.0.0</version>
       <scope>runtime</scope>
 
@@ -80,7 +80,7 @@
           <username>admin</username>
           <password>admin</password>
           <url>http://localhost:9090/manager/text</url>
-          <path>/creditCardSystem</path>
+          <path>/soap</path>
         </configuration>
       </plugin>
 

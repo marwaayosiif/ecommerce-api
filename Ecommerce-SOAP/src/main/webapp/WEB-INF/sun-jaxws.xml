@@ -1,23 +1,23 @@
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
-    <endpoint name="person" implementation="gov.iti.jets.services.impl.PersonImpl" url-pattern="/ws/person">
-        <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">
-            <handler-chain>
-                <handler>
-                    <handler-class>gov.iti.jets.services.impl.ProtocolHandler</handler-class>
-                </handler>
-            </handler-chain>
-        </handler-chains>
+    <endpoint name="admin" implementation="gov.iti.jets.services.admin.impl.AdminServiceImpl" url-pattern="/admin">
+<!--        <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">-->
+<!--            <handler-chain>-->
+<!--                <handler>-->
+<!--                    <handler-class>gov.iti.jets.services.admin.impl.ProtocolHandler</handler-class>-->
+<!--                </handler>-->
+<!--            </handler-chain>-->
+<!--        </handler-chains>-->
     </endpoint>
 
-    <endpoint name="card" implementation="gov.iti.jets.services.impl.CardImpl" url-pattern="/ws/card" >
-        <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">
-            <handler-chain>
-                <handler>
+    <endpoint name="clerk" implementation="gov.iti.jets.services.clerk.impl.ClerkServiceImpl" url-pattern="/clerks" >
+<!--        <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">-->
+<!--            <handler-chain>-->
+<!--                <handler>-->
 
-                    <handler-class>gov.iti.jets.services.impl.ProtocolHandler</handler-class>
-                </handler>
-            </handler-chain>
+<!--                    <handler-class>gov.iti.jets.services.admin.impl.ProtocolHandler</handler-class>-->
+<!--                </handler>-->
+<!--            </handler-chain>-->
 
-        </handler-chains>
+<!--        </handler-chains>-->
     </endpoint>
 </endpoints>

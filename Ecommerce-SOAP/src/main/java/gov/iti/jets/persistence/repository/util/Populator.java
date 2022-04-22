@@ -1,6 +1,7 @@
  package gov.iti.jets.persistence.repository.util;
 
- import gov.iti.jets.persistence.entity.*;
+ import gov.iti.jets.persistence.entity.Admin;
+ import gov.iti.jets.persistence.entity.Clerk;
  import jakarta.persistence.EntityManager;
  import jakarta.persistence.EntityManagerFactory;
  import jakarta.persistence.Persistence;

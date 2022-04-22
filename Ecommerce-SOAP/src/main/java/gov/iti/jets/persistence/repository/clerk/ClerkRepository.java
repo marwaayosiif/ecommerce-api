@@ -1,12 +1,15 @@
 package gov.iti.jets.persistence.repository.clerk;
 
+import gov.iti.jets.persistence.entity.Clerk;
+import gov.iti.jets.services.clerk.dto.ClerkPostRequest;
+import gov.iti.jets.services.clerk.dto.ClerkPutRequest;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import gov.iti.jets.persistence.entity.Clerk;
-import gov.iti.jets.services.dto.clerk.ClerkPostRequest;
-import gov.iti.jets.services.dto.clerk.ClerkPutRequest;
-import jakarta.persistence.*;
 
 public class ClerkRepository {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("api");

@@ -1,6 +1,6 @@
 package gov.iti.jets.entity;
 // default package
-// Generated Apr 19, 2022, 11:05:40 PM by Hibernate Tools 6.0.0.Beta2
+// Generated Apr 21, 2022, 7:21:18 AM by Hibernate Tools 6.0.0.Beta2
 
 
 import jakarta.persistence.Column;
@@ -25,21 +25,21 @@ public class Customer  implements java.io.Serializable {
 
 
      private Integer id;
-     private String name;
      private String email;
+     private String name;
      private String phone;
-     private Set<Order> orders = new HashSet<Order>(0);
      private Set<Shoppingcart> shoppingcarts = new HashSet<Shoppingcart>(0);
+     private Set<Order> orders = new HashSet<Order>(0);
 
     public Customer() {
     }
 
-    public Customer(String name, String email, String phone, Set<Order> orders, Set<Shoppingcart> shoppingcarts) {
-       this.name = name;
+    public Customer(String email, String name, String phone, Set<Shoppingcart> shoppingcarts, Set<Order> orders) {
        this.email = email;
+       this.name = name;
        this.phone = phone;
-       this.orders = orders;
        this.shoppingcarts = shoppingcarts;
+       this.orders = orders;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -55,16 +55,6 @@ public class Customer  implements java.io.Serializable {
     }
 
     
-    @Column(name="name", length=100)
-    public String getName() {
-        return this.name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    
     @Column(name="email", length=100)
     public String getEmail() {
         return this.email;
@@ -72,6 +62,16 @@ public class Customer  implements java.io.Serializable {
     
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    
+    @Column(name="name", length=100)
+    public String getName() {
+        return this.name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
 
     
@@ -85,21 +85,21 @@ public class Customer  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="customer")
-    public Set<Order> getOrders() {
-        return this.orders;
-    }
-    
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="customer")
     public Set<Shoppingcart> getShoppingcarts() {
         return this.shoppingcarts;
     }
     
     public void setShoppingcarts(Set<Shoppingcart> shoppingcarts) {
         this.shoppingcarts = shoppingcarts;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="customer")
+    public Set<Order> getOrders() {
+        return this.orders;
+    }
+    
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
 
