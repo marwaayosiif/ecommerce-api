@@ -1,0 +1,93 @@
+GET http://localhost:9090/ecommerce/api/admins/1 HTTP/1.1
+Host: localhost:9090
+Accept: application/xml
+
+###
+
+# GET /ecommerce/api/products?from=2&offset=4 HTTP/1.1
+# Host: localhost:9090
+# Accept: application/json
+
+# ###
+
+# GET /ecommerce/api/products?name=galaxy HTTP/1.1
+# Host: localhost:9090
+# Accept: application/json
+
+# ###
+
+# GET /ecommerce/api/products?category=drinks HTTP/1.1
+# Host: localhost:9090
+# Accept: application/json
+
+# ###
+
+# GET /ecommerce/api/products/2 HTTP/1.1
+# Host: localhost:9090
+# Accept: application/json
+
+# ###
+
+# GET /ecommerce/api/products/1/categories HTTP/1.1
+# Host: localhost:9090
+# Accept: application/json
+
+# ###
+
+# GET /ecommerce/api/products/1/categories?cid=5 HTTP/1.1
+# Host: localhost:9090
+# Accept: application/json
+
+# ###
+
+# DELETE  /ecommerce/api/products/1/categories?cid=5 HTTP/1.1
+# Host: localhost:9090
+# Accept: application/json
+
+# ###
+
+# POST /ecommerce/api/products HTTP/1.1
+# Host: localhost:9090
+# Accept: text/plain
+# Content-Type: application/json
+
+# {
+#     "name" :"galaxy",
+#     "categoryList":[
+        
+#         2,
+#         5,
+#         7
+#     ]
+# }
+
+# ###
+
+# DELETE  /ecommerce/api/products HTTP/1.1
+# Host: localhost:9090
+# Accept: text/plain
+# Content-Type: application/json
+
+# ###
+
+# DELETE  /ecommerce/api/products/3 HTTP/1.1
+# Host: localhost:9090
+# Accept: text/plain , application/xml
+# Content-Type: application/json
+
+# ###
+
+# PUT  /ecommerce/api/products/1 HTTP/1.1
+# Host: localhost:9090
+# Accept: text/plain
+# Content-Type: application/json
+
+# {
+#     "name" :"milka",
+#     "categoryList":[
+#         1,
+#         2,
+#         5
+#     ],
+#     "price":30
+# }
