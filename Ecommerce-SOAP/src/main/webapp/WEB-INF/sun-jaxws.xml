@@ -20,4 +20,48 @@
 
 <!--        </handler-chains>-->
     </endpoint>
+    <endpoint name="category" implementation="gov.iti.jets.services.category.impl.CategoryServiceImpl" url-pattern="/categories" >
+        <!--        <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">-->
+        <!--            <handler-chain>-->
+        <!--                <handler>-->
+
+        <!--                    <handler-class>gov.iti.jets.services.admin.impl.ProtocolHandler</handler-class>-->
+        <!--                </handler>-->
+        <!--            </handler-chain>-->
+
+        <!--        </handler-chains>-->
+    </endpoint>
+    <endpoint name="customer" implementation="gov.iti.jets.services.customer.impl.CustomerServiceImpl" url-pattern="/customers" >
+        <!--        <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">-->
+        <!--            <handler-chain>-->
+        <!--                <handler>-->
+
+        <!--                    <handler-class>gov.iti.jets.services.admin.impl.ProtocolHandler</handler-class>-->
+        <!--                </handler>-->
+        <!--            </handler-chain>-->
+
+        <!--        </handler-chains>-->
+    </endpoint>
+    <endpoint name="order" implementation="gov.iti.jets.services.order.impl.OrderServiceImpl" url-pattern="/orders" >
+        <!--        <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">-->
+        <!--            <handler-chain>-->
+        <!--                <handler>-->
+
+        <!--                    <handler-class>gov.iti.jets.services.admin.impl.ProtocolHandler</handler-class>-->
+        <!--                </handler>-->
+        <!--            </handler-chain>-->
+
+        <!--        </handler-chains>-->
+    </endpoint>
+    <endpoint name="product" implementation="gov.iti.jets.services.product.impl.ProductServiceImpl" url-pattern="/products" >
+        <!--        <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">-->
+        <!--            <handler-chain>-->
+        <!--                <handler>-->
+
+        <!--                    <handler-class>gov.iti.jets.services.admin.impl.ProtocolHandler</handler-class>-->
+        <!--                </handler>-->
+        <!--            </handler-chain>-->
+
+        <!--        </handler-chains>-->
+    </endpoint>
 </endpoints>
