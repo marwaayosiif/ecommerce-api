@@ -97,7 +97,7 @@ public class Product  implements java.io.Serializable {
         this.categories = categories;
     }
 
-@ManyToMany(fetch=FetchType.LAZY)
+@ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="product_order", catalog="api", joinColumns = { 
         @JoinColumn(name="prod_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="order_id", nullable=false, updatable=false) })

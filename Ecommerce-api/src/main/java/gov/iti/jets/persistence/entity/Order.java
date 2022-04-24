@@ -1,10 +1,12 @@
 package gov.iti.jets.persistence.entity;// default package
-// Generated Apr 24, 2022, 1:14:31 PM by Hibernate Tools 6.0.0.Beta2
+// Generated Apr 24, 2022, 2:56:59 PM by Hibernate Tools 6.0.0.Beta2
 
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -24,7 +26,7 @@ import java.util.Set;
 public class Order  implements java.io.Serializable {
 
 
-     private int id;
+     private Integer id;
      private Customer customer;
      private Integer totalPrice;
      private Set<Product> products = new HashSet<Product>(0);
@@ -32,36 +34,31 @@ public class Order  implements java.io.Serializable {
     public Order() {
     }
 
-	
-    public Order(int id) {
-        this.id = id;
-    }
-    public Order(int id, Customer customer, Integer totalPrice, Set<Product> products) {
-       this.id = id;
+    public Order( Customer customer, Integer totalPrice, Set<Product> products) {
        this.customer = customer;
        this.totalPrice = totalPrice;
        this.products = products;
     }
    
-     @Id 
+     @Id @GeneratedValue(strategy=IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="cutomer_id")
     public Customer getCustomer() {
         return this.customer;
     }
     
-    public void setCustomer(Customer customer) {
+    public void setCustomer( Customer customer) {
         this.customer = customer;
     }
 
@@ -75,7 +72,7 @@ public class Order  implements java.io.Serializable {
         this.totalPrice = totalPrice;
     }
 
-@ManyToMany(fetch=FetchType.LAZY)
+@ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="product_order", catalog="api", joinColumns = { 
         @JoinColumn(name="order_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="prod_id", nullable=false, updatable=false) })

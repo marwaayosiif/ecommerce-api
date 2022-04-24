@@ -1,13 +1,12 @@
 package gov.iti.jets.persistence.entity;// default package
-// Generated Apr 24, 2022, 1:14:31 PM by Hibernate Tools 6.0.0.Beta2
+// Generated Apr 24, 2022, 2:56:59 PM by Hibernate Tools 6.0.0.Beta2
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import gov.iti.jets.persistence.entity.Order;
+import jakarta.persistence.*;
+
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +20,7 @@ import java.util.Set;
 public class Customer  implements java.io.Serializable {
 
 
-     private int id;
+     private Integer id;
      private String name;
      private String email;
      private String phone;
@@ -30,27 +29,22 @@ public class Customer  implements java.io.Serializable {
     public Customer() {
     }
 
-	
-    public Customer(int id) {
-        this.id = id;
-    }
-    public Customer(int id, String name, String email, String phone, Set<Order> orders) {
-       this.id = id;
+    public Customer(String name, String email, String phone, Set<Order> orders) {
        this.name = name;
        this.email = email;
        this.phone = phone;
        this.orders = orders;
     }
    
-     @Id 
+     @Id @GeneratedValue(strategy=IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -84,7 +78,7 @@ public class Customer  implements java.io.Serializable {
         this.phone = phone;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="customer")
+@OneToMany(fetch=FetchType.EAGER, mappedBy="customer", cascade = CascadeType.REMOVE)
     public Set<Order> getOrders() {
         return this.orders;
     }
