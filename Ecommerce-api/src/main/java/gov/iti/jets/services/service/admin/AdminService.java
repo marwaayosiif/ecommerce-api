@@ -42,7 +42,7 @@ public class AdminService {
         return adminRepository.deleteAdmin( id );
     }
 
-    private AdminGetResponse mapperFromAdminToAdminGetResponse(Admin admin) {
+    private AdminGetResponse mapperFromAdminToAdminGetResponse( Admin admin) {
         return new AdminGetResponse( admin.getId(), admin.getName());
     }
 

@@ -1,12 +1,7 @@
 package gov.iti.jets.services.service.clerk;
 
-import gov.iti.jets.persistence.entity.Admin;
 import gov.iti.jets.persistence.entity.Clerk;
-import gov.iti.jets.persistence.repository.admin.AdminRepository;
 import gov.iti.jets.persistence.repository.clerk.ClerkRepository;
-import gov.iti.jets.services.dto.admin.AdminGetResponse;
-import gov.iti.jets.services.dto.admin.AdminPostRequest;
-import gov.iti.jets.services.dto.admin.AdminPutRequest;
 import gov.iti.jets.services.dto.clerk.ClerkGetResponse;
 import gov.iti.jets.services.dto.clerk.ClerkPostRequest;
 import gov.iti.jets.services.dto.clerk.ClerkPutRequest;
