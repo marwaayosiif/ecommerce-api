@@ -6,11 +6,14 @@ import gov.iti.jets.persistence.entity.Product;
 import gov.iti.jets.services.dto.customer.CustomerOrderGetResponse;
 import gov.iti.jets.services.dto.customer.CustomerOrderPostRequest;
 import gov.iti.jets.services.dto.customer.CustomerPostRequest;
+import jakarta.json.Json;
+import jakarta.json.stream.JsonParser;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
+import java.io.StringReader;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,7 +44,7 @@ public class CustomerRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Customer customer = em.find( Customer.class, id );
-        if(customer ==  null){
+        if ( customer == null ) {
             return new ArrayList<>();
         }
         em.getTransaction().commit();
@@ -53,7 +56,7 @@ public class CustomerRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Customer customer = em.find( Customer.class, id );
-        if(customer == null){
+        if ( customer == null ) {
             return null;
         }
         em.getTransaction().commit();
@@ -67,7 +70,7 @@ public class CustomerRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         TypedQuery<Customer> customerQ = em.createQuery( "from Customer c", Customer.class );
-        if(customerQ.getResultList().isEmpty()){
+        if ( customerQ.getResultList().isEmpty() ) {
             return null;
         }
         for ( Customer customer : customerQ.getResultList() ) {
@@ -83,7 +86,7 @@ public class CustomerRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Customer customer = em.find( Customer.class, id );
-        if(customer == null){
+        if ( customer == null ) {
             return null;
         }
         em.remove( customer );
@@ -106,7 +109,7 @@ public class CustomerRepository {
         em.getTransaction().begin();
         Set<Product> products = new HashSet<>();
         Customer customer = em.find( Customer.class, id );
-        if(customer == null){
+        if ( customer == null ) {
             return null;
         }
         for ( Integer productId :
@@ -123,7 +126,7 @@ public class CustomerRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Customer customer = em.find( Customer.class, id );
-        if(customer == null){
+        if ( customer == null ) {
             return null;
         }
         customer.setName( customerPostRequest.getName() );
@@ -139,13 +142,13 @@ public class CustomerRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Customer customer = em.find( Customer.class, id );
-        if(customer == null){
+        if ( customer == null ) {
             return null;
         }
         Optional<Order> first = customer.getOrders().stream().filter( o -> {
             return o.getId() == oid;
         } ).findFirst();
-        if(!first.isPresent()){
+        if ( !first.isPresent() ) {
             return null;
         }
         Order order = first.get();
@@ -160,4 +163,55 @@ public class CustomerRepository {
         em.close();
         return order;
     }
+
+    public List<Customer> getAllCustomers( int start, int limit ) {
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+        TypedQuery<Customer> customerQ = em.createQuery( "from Customer c", Customer.class );
+        List<Customer> customers = customerQ.setFirstResult( start ).setMaxResults( limit ).getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return customers;
+    }
+
+    public Customer editCustomerWithPatch( String field, int id ) {
+
+        JsonParser parser = Json.createParser( new StringReader( field ) );
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Customer customer = em.find( Customer.class, id );
+        if(customer == null){
+            return null;
+        }
+        while ( parser.hasNext() ) {
+            final JsonParser.Event event = parser.next();
+            switch ( event ) {
+                case KEY_NAME:
+                    parser.next();
+                    editFields( parser.getString() , customer , parser);
+            }
+        }
+        customer = em.merge( customer );
+        em.getTransaction().commit();
+        em.close();
+        return customer;
+    }
+
+
+    private void editFields( String string , Customer customer , JsonParser  parser) {
+        switch ( string ){
+            case "name":
+                customer.setName( parser.getString() );
+                break;
+            case "email":
+                customer.setEmail( parser.getString() );
+                break;
+            case "phone":
+                customer.setPhone( parser.getString() );
+            default:
+                break;
+        }
+    }
+
+
 }

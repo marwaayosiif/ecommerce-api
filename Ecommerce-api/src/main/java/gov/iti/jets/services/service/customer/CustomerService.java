@@ -64,6 +64,15 @@ public class CustomerService {
     public CustomerOrderGetResponse editOrderToCustomer( CustomerOrderPostRequest customerOrderPostRequest, int id, int oid ) {
         return mapperFromOrderToCustomerOrderGetResponse( customerRepository.editOrderToCustomer(customerOrderPostRequest,id,oid) );
     }
+    public List<CustomerGetResponse> getAllCustomers( int start, int limit ) {
+        List<Customer> customers = customerRepository.getAllCustomers(start , limit);
+        List<CustomerGetResponse> listCustomers = new ArrayList<>();
+        for ( Customer customer :
+                customers ) {
+            listCustomers.add( mapperFromCustomerToCustomerGetResponse(customer) );
+        }
+        return listCustomers;
+    }
 
     private CustomerGetResponse mapperFromCustomerToCustomerGetResponse( Customer customer ) {
         if(customer == null){
@@ -78,4 +87,8 @@ public class CustomerService {
         return new CustomerOrderGetResponse(order.getId() , order.getTotalPrice() );
     }
 
+    public CustomerGetResponse editCustomerWithPatch( String field, int id ) {
+        Customer customer = customerRepository.editCustomerWithPatch( field, id );
+        return mapperFromCustomerToCustomerGetResponse( customer );
+    }
 }

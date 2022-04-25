@@ -7,23 +7,43 @@ import gov.iti.jets.services.dto.customer.CustomerOrderPostRequest;
 import gov.iti.jets.services.dto.customer.CustomerPostRequest;
 import gov.iti.jets.services.service.customer.CustomerService;
 import gov.iti.jets.services.service.error.NotFoundException;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.annotation.JsonbCreator;
+import jakarta.json.stream.JsonParser;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.List;
 
 @Path( "customers" )
 public class CustomerApi {
     @Context UriInfo uriInfo;
     CustomerService customerService = new CustomerService();
+    private Object field;
+    private int id;
 
     @GET
     @Produces( {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML} )
-    public Response getAllCustomers(){
-        List<CustomerGetResponse> allCustomers = customerService.getAllCustomers();
+    public Response getAllCustomers(@DefaultValue( "-1" ) @QueryParam( "s" )int start ,@DefaultValue( "-1" ) @QueryParam( "l" )int limit ){
+        List<CustomerGetResponse> allCustomers;
+        if(start == -1 && limit == -1) {
+            allCustomers = customerService.getAllCustomers();
+        }else {
+            if(start == -1 || limit == -1){
+                throw new NotFoundException("Query not correct");
+            }
+            allCustomers = customerService.getAllCustomers( start, limit );
+        }
         if(allCustomers.isEmpty()){
             throw new NotFoundException("There is no customers");
         }
@@ -106,6 +126,21 @@ public class CustomerApi {
     @Consumes( {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML,MediaType.TEXT_PLAIN} )
     public Response editCustomer( CustomerPostRequest customerPostRequest,@PathParam( "id" )int id ){
         CustomerGetResponse customerGetResponse = customerService.editCustomer( customerPostRequest, id );
+        if(customerGetResponse == null){
+            throw new NotFoundException( "Cannot edit customer with id = "+id );
+        }
+        return Response.ok().entity( customerGetResponse ).build();
+    }
+
+    //TODO PATCH
+    @PATCH
+    @Path( "{id}" )
+    @Produces( {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML,MediaType.TEXT_PLAIN} )
+    @Consumes( {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML,MediaType.TEXT_PLAIN} )
+    public Response editCustomerWithPatch( @QueryParam( "fields" ) String field,
+                                           @PathParam( "id" )int id ){
+
+        CustomerGetResponse customerGetResponse = customerService.editCustomerWithPatch( field, id );
         if(customerGetResponse == null){
             throw new NotFoundException( "Cannot edit customer with id = "+id );
         }
