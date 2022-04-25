@@ -35,6 +35,9 @@ public class OrderRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         TypedQuery<Order> orders = em.createQuery( "from Order o", Order.class );
+        if(orders.getResultList().isEmpty()){
+            return null;
+        }
         for ( Order order :
                 orders.getResultList() ) {
             em.remove( order );
@@ -48,6 +51,9 @@ public class OrderRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Order order = em.find( Order.class, id );
+        if(order == null){
+            return null;
+        }
         em.remove( order );
         em.getTransaction().commit();
         em.close();

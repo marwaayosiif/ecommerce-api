@@ -41,6 +41,9 @@ public class ProductRepository {
         em.getTransaction().begin();
         TypedQuery<Product> cQuery = em.createQuery( "select p from Product p", Product.class );
         List<Product> products = cQuery.getResultList();
+        if(products.isEmpty()){
+            return null;
+        }
         for ( Product product : products ) {
             em.remove( product );
         }
@@ -53,6 +56,9 @@ public class ProductRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Product product = em.find( Product.class, id );
+        if(product == null){
+            return null;
+        }
         em.remove( product );
         em.getTransaction().commit();
         em.close();
@@ -72,6 +78,9 @@ public class ProductRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Product product = em.find( Product.class, id );
+        if(product == null){
+            return null;
+        }
         product.setName( productPutRequest.getName() );
         product.setDescription( productPutRequest.getDescription() );
         product.setPrice( productPutRequest.getPrice() );
@@ -83,7 +92,6 @@ public class ProductRepository {
     }
 
     private Set<Category> editCategory( List<Integer> integerList ){
-//        em = emf.createEntityManager();
         Set<Category> categories = new HashSet<>();
         for ( Integer id :
                 integerList ) {

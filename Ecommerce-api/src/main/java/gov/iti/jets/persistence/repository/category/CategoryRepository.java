@@ -27,6 +27,9 @@ public class CategoryRepository {
         em.getTransaction().begin();
         TypedQuery<Category> cQuery = em.createQuery( "select c from Category c", Category.class );
         List<Category> categories = cQuery.getResultList();
+        if(categories.isEmpty()){
+            return null;
+        }
         for ( Category category : categories ) {
             em.remove( category );
         }
@@ -48,6 +51,9 @@ public class CategoryRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Category category = em.find( Category.class, id );
+        if(category == null){
+            return null;
+        }
         em.remove( category );
         em.getTransaction().commit();
         em.close();
@@ -68,6 +74,9 @@ public class CategoryRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Category category = em.find( Category.class, id );
+        if(category == null){
+            return null;
+        }
         List<Integer> productIds = categoryPutRequest.getProductId();
         Set<Product> products = new HashSet<>();
         for ( Integer productId: productIds ) {

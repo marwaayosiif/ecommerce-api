@@ -22,9 +22,6 @@ public class ClerkService {
         }
         return clerks;
     }
-    private ClerkGetResponse mapperFromClerkToClerkGetResponse( Clerk clerk) {
-        return new ClerkGetResponse( clerk.getId(), clerk.getName());
-    }
 
     public ClerkGetResponse getClerk( int id ) {
         Clerk clerk = clerkRepository.getClerk( id );
@@ -46,5 +43,12 @@ public class ClerkService {
 
     public String deleteClerk( int id ) {
         return clerkRepository.deleteClerk( id );
+    }
+
+    private ClerkGetResponse mapperFromClerkToClerkGetResponse( Clerk clerk) {
+        if(clerk == null){
+            return null;
+        }
+        return new ClerkGetResponse( clerk.getId(), clerk.getName());
     }
 }

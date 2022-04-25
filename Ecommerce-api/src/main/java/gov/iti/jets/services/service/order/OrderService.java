@@ -33,6 +33,9 @@ public class OrderService {
     }
 
     private OrderGetResponse mapperFromOrderToOrderGetResponse( Order order ) {
+        if(order == null){
+            return null;
+        }
         return new OrderGetResponse(order.getId() , order.getCustomer() , order.getTotalPrice() , order.getProducts());
     }
 

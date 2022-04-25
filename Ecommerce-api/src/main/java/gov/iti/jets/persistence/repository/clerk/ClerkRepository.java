@@ -3,6 +3,7 @@ package gov.iti.jets.persistence.repository.clerk;
 import java.util.ArrayList;
 import java.util.List;
 
+import gov.iti.jets.persistence.entity.Admin;
 import gov.iti.jets.persistence.entity.Clerk;
 import gov.iti.jets.services.dto.clerk.ClerkPostRequest;
 import gov.iti.jets.services.dto.clerk.ClerkPutRequest;
@@ -48,6 +49,9 @@ public class ClerkRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Clerk clerk = em.find( Clerk.class, id );
+        if(clerk == null){
+            return null;
+        }
         clerk.setName( clerkPutRequest.getName() );
         merge = em.merge( clerk );
         em.getTransaction().commit();
@@ -60,8 +64,12 @@ public class ClerkRepository {
         em.getTransaction().begin();
         TypedQuery<Clerk> aQuery = em.createQuery("select c from Clerk c", Clerk.class);
         List<Clerk> clerks = aQuery.getResultList();
-        for (Clerk clerk : clerks) {
-            em.remove( clerk );
+        if(clerks.isEmpty()){
+            return null;
+        }else {
+            for ( Clerk clerk : clerks ) {
+                em.remove( clerk );
+            }
         }
         em.getTransaction().commit();
         em.close();
@@ -72,6 +80,9 @@ public class ClerkRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Clerk clerk = em.find(Clerk.class, id);
+        if(clerk == null){
+            return null;
+        }
         em.remove( clerk );
         em.getTransaction().commit();
         em.close();

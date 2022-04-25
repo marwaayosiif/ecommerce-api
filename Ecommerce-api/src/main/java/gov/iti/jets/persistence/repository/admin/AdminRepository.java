@@ -28,8 +28,12 @@ public class AdminRepository {
         em.getTransaction().begin();
         TypedQuery<Admin> aQuery = em.createQuery("select a from Admin a", Admin.class);
         List<Admin> admins = aQuery.getResultList();
-        for (Admin admin : admins) {
-            em.remove( admin );
+        if(admins.isEmpty()){
+            return null;
+        }else {
+            for ( Admin admin : admins ) {
+                em.remove( admin );
+            }
         }
         em.getTransaction().commit();
         em.close();
@@ -51,6 +55,9 @@ public class AdminRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Admin admin = em.find(Admin.class, id);
+        if(admin == null){
+            return null;
+        }
         em.remove( admin );
         em.getTransaction().commit();
         em.close();
@@ -72,6 +79,9 @@ public class AdminRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Admin admin = em.find( Admin.class, id );
+        if(admin == null){
+            return null;
+        }
         admin.setName( adminPutRequest.getName() );
         merge = em.merge( admin );
         em.getTransaction().commit();

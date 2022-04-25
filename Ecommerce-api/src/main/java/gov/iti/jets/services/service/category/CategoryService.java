@@ -43,6 +43,9 @@ public class CategoryService {
     }
 
     private CategoryGetResponse mapperFromCategoryToCategoryGetRes(Category category){
+        if(category == null){
+            return null;
+        }
         return new CategoryGetResponse( category.getId(), category.getName() , category.getProducts());
     }
 

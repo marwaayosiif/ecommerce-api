@@ -11,17 +11,23 @@ import java.util.List;
 
 public class AdminService {
     AdminRepository adminRepository = new AdminRepository();
-    public List<AdminGetResponse> getAllAdmins(){
+
+    public List<AdminGetResponse> getAllAdmins() {
         List<Admin> allAdmins = adminRepository.getAllAdmins();
         List<AdminGetResponse> admins = new ArrayList<>();
-        for ( Admin admin: allAdmins ) {
-            admins.add( mapperFromAdminToAdminGetResponse( admin ) );
+        if ( !allAdmins.isEmpty() ) {
+            for ( Admin admin : allAdmins ) {
+                admins.add( mapperFromAdminToAdminGetResponse( admin ) );
+            }
         }
         return admins;
     }
 
     public AdminGetResponse getAdmin( int id ) {
         Admin admin = adminRepository.getAdmin( id );
+        if ( admin == null ) {
+            return null;
+        }
         return mapperFromAdminToAdminGetResponse( admin );
     }
 
@@ -31,6 +37,9 @@ public class AdminService {
 
     public AdminGetResponse editAdmin( int id, AdminPutRequest adminPutRequest ) {
         Admin admin = adminRepository.editAdmin( id, adminPutRequest );
+        if ( admin == null ) {
+            return null;
+        }
         return mapperFromAdminToAdminGetResponse( admin );
     }
 
@@ -42,8 +51,8 @@ public class AdminService {
         return adminRepository.deleteAdmin( id );
     }
 
-    private AdminGetResponse mapperFromAdminToAdminGetResponse( Admin admin) {
-        return new AdminGetResponse( admin.getId(), admin.getName());
+    private AdminGetResponse mapperFromAdminToAdminGetResponse( Admin admin ) {
+        return new AdminGetResponse( admin.getId(), admin.getName() );
     }
 
 }

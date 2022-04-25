@@ -1,13 +1,18 @@
 package gov.iti.jets.presentation;
 
+import gov.iti.jets.services.dto.admin.AdminGetResponse;
+import gov.iti.jets.services.dto.category.CategoryGetResponse;
 import gov.iti.jets.services.dto.category.CategoryPostRequest;
 import gov.iti.jets.services.dto.category.CategoryPutRequest;
 import gov.iti.jets.services.service.category.CategoryService;
+import gov.iti.jets.services.service.error.NotFoundException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+
+import java.util.List;
 
 @Path( "categories" )
 public class CategoryApi {
@@ -16,27 +21,43 @@ public class CategoryApi {
     @GET
     @Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
     public Response getAllCategory (){
-        return Response.ok().entity( categoryService.getAllCategory() ).build();
+        List<CategoryGetResponse> allCategory = categoryService.getAllCategory();
+        if(allCategory.isEmpty()){
+            throw new NotFoundException("There is no categories");
+        }
+        return Response.ok().entity( allCategory ).build();
     }
 
     @GET
     @Path( "{id}" )
     @Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
     public Response getCategoryById ( @PathParam ( "id" ) int id){
-        return Response.ok().entity( categoryService.getCategoryById(id) ).build();
+        CategoryGetResponse categoryById = categoryService.getCategoryById( id );
+        if(categoryById == null){
+            throw new NotFoundException( "There is no category with id = "+id );
+        }
+        return Response.ok().entity( categoryById ).build();
     }
 
     @DELETE
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces({MediaType.TEXT_PLAIN ,MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response deleteAllCategory(){
-        return Response.ok().entity( categoryService.deleteAllCategory() ).build();
+        String s = categoryService.deleteAllCategory();
+        if(s == null){
+            throw new NotFoundException( "There is no category to be deleted");
+        }
+        return Response.ok().entity( s ).build();
     }
 
     @DELETE
     @Path( "{id}" )
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces({MediaType.TEXT_PLAIN,MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response deleteCategoryById(@PathParam( "id" ) int id){
-        return Response.ok().entity( categoryService.deleteCategoryById(id) ).build();
+        String s =categoryService.deleteCategoryById(id);
+        if(s == null){
+            throw new NotFoundException( "Category with id = "+id+" not found to be deleted");
+        }
+        return Response.ok().entity( s ).build();
     }
 
     @POST
@@ -50,6 +71,10 @@ public class CategoryApi {
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     @Path( "{id}" )
     public Response editCategory( CategoryPutRequest categoryPutRequest , @PathParam( "id" ) int id ){
-        return Response.ok().entity( categoryService.editCategory(categoryPutRequest , id) ).build();
+        CategoryGetResponse categoryGetResponse = categoryService.editCategory( categoryPutRequest, id );
+        if(categoryGetResponse == null){
+            throw new NotFoundException( "Cannot edit category with id = "+id );
+        }
+        return Response.ok().entity( categoryGetResponse ).build();
     }
 }

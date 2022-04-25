@@ -66,10 +66,15 @@ public class CustomerService {
     }
 
     private CustomerGetResponse mapperFromCustomerToCustomerGetResponse( Customer customer ) {
+        if(customer == null){
+            return null;
+        }
         return new CustomerGetResponse(customer.getId() , customer.getName(), customer.getEmail(), customer.getPhone() );
     }
     private CustomerOrderGetResponse mapperFromOrderToCustomerOrderGetResponse( Order order ) {
-
+        if(order == null){
+            return null;
+        }
         return new CustomerOrderGetResponse(order.getId() , order.getTotalPrice() );
     }
 

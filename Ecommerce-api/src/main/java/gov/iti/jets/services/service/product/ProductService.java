@@ -43,6 +43,9 @@ public class ProductService {
     }
 
     private ProductGetResponse mapperFromProductToProductGetRes( Product product){
+        if(product == null){
+            return null;
+        }
         return new ProductGetResponse(product.getId(), product.getDescription() , product.getName() , product.getPrice() , product.getCategories());
     }
 
