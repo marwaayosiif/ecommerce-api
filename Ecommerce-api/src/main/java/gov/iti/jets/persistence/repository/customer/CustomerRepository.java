@@ -187,7 +187,6 @@ public class CustomerRepository {
             final JsonParser.Event event = parser.next();
             switch ( event ) {
                 case KEY_NAME:
-                    parser.next();
                     editFields( parser.getString() , customer , parser);
             }
         }
@@ -199,6 +198,7 @@ public class CustomerRepository {
 
 
     private void editFields( String string , Customer customer , JsonParser  parser) {
+        parser.next();
         switch ( string ){
             case "name":
                 customer.setName( parser.getString() );
@@ -208,6 +208,7 @@ public class CustomerRepository {
                 break;
             case "phone":
                 customer.setPhone( parser.getString() );
+                break;
             default:
                 break;
         }

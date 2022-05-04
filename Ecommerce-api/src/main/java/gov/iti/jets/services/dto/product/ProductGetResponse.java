@@ -1,6 +1,8 @@
 package gov.iti.jets.services.dto.product;
 
 import gov.iti.jets.persistence.entity.Category;
+import jakarta.ws.rs.core.Link;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,8 @@ public class ProductGetResponse {
     private String name;
     private Integer price;
     private List<ProductCategoryGetResponse> categories = new ArrayList<>();
+//    @XmlJavaTypeAdapter( Link.JaxbAdapter.class )
+//    private List<Link> links = new ArrayList<>();
 
     public ProductGetResponse( Integer id, String description, String name, Integer price, Set<Category> categories ) {
         this.id = id;
@@ -65,6 +69,14 @@ public class ProductGetResponse {
     public void setCategories( List<ProductCategoryGetResponse> categories ) {
         this.categories = categories;
     }
+
+//    public List<Link> getLinks() {
+//        return links;
+//    }
+//
+//    public void setLinks( List<Link> links ) {
+//        this.links = links;
+//    }
 
     @Override
     public String toString() {

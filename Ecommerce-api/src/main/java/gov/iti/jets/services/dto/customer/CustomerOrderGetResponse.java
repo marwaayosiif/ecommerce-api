@@ -2,14 +2,20 @@ package gov.iti.jets.services.dto.customer;
 
 import gov.iti.jets.persistence.entity.Customer;
 import gov.iti.jets.persistence.entity.Product;
+import jakarta.ws.rs.core.Link;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CustomerOrderGetResponse {
 
     private Integer id;
     private Integer totalPrice;
+    @XmlJavaTypeAdapter( Link.JaxbAdapter.class )
+    private List<Link> links = new ArrayList<>();
 
     public CustomerOrderGetResponse() {
     }
@@ -33,6 +39,14 @@ public class CustomerOrderGetResponse {
 
     public void setTotalPrice( Integer totalPrice ) {
         this.totalPrice = totalPrice;
+    }
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks( List<Link> links ) {
+        this.links = links;
     }
 
     @Override

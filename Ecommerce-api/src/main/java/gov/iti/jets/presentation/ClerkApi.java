@@ -6,12 +6,16 @@ import gov.iti.jets.services.dto.clerk.ClerkPutRequest;
 import gov.iti.jets.services.service.clerk.ClerkService;
 import gov.iti.jets.services.service.error.NotFoundException;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 @Path( "clerks" )
 public class ClerkApi {
 
+    @Context
+    UriInfo uriInfo;
     ClerkService clerkService;
     public ClerkApi() {
         clerkService = new ClerkService();
@@ -40,7 +44,7 @@ public class ClerkApi {
     @POST
     @Consumes({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
     public Response postClerk( ClerkPostRequest clerkPostRequest) {
-        return Response.ok().entity(clerkService.addClerk(clerkPostRequest)).build();
+        return Response.created( uriInfo.getBaseUri() ).entity(clerkService.addClerk(clerkPostRequest)).build();
     }
 
     @PUT
@@ -67,10 +71,11 @@ public class ClerkApi {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
     public Response deleteClerkById(@PathParam("id") int id) {
-        if(clerkService.deleteClerk(id ) == null){
+        clerkService.deleteClerk( id );
+        if( clerkService.deleteClerk(id ) == null){
             throw new NotFoundException( "Clerk with id = "+id+" not found to be deleted");
         }
-        return Response.ok().entity(clerkService.deleteClerk(id )).build();
+        return Response.ok().entity( clerkService.deleteClerk(id ) ).build();
     }
 
 }

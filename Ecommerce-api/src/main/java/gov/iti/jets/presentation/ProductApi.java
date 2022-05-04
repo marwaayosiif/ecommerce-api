@@ -7,15 +7,14 @@ import gov.iti.jets.services.dto.product.ProductPutRequest;
 import gov.iti.jets.services.service.error.NotFoundException;
 import gov.iti.jets.services.service.product.ProductService;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
+import jakarta.ws.rs.core.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Path( "products" )
 public class ProductApi {
+    @Context UriInfo uriInfo;
     ProductService productService = new ProductService();
 
     @GET
@@ -36,6 +35,9 @@ public class ProductApi {
         if(productById == null){
             throw new NotFoundException( "There is no product with id = "+id );
         }
+
+//        Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
+//        productById.setLinks( Arrays.asList( self ) );
         return Response.ok().entity( productById ).build();
     }
 

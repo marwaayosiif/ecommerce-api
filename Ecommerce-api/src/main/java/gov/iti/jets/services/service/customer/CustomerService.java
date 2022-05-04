@@ -37,7 +37,7 @@ public class CustomerService {
         return  orders;
     }
 
-    public Object getOrderByIdOfCustomer( int id, int oid ) {
+    public CustomerOrderGetResponse getOrderByIdOfCustomer( int id, int oid ) {
         return mapperFromOrderToCustomerOrderGetResponse( customerRepository.getOrderByIdOfCustomer(id,oid) );
     }
 

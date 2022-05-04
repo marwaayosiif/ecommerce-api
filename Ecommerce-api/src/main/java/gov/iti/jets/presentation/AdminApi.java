@@ -6,13 +6,17 @@ import gov.iti.jets.services.dto.admin.AdminPutRequest;
 import gov.iti.jets.services.service.admin.AdminService;
 import gov.iti.jets.services.service.error.NotFoundException;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 import java.util.List;
 
 @Path("admins")
 public class AdminApi {
+    @Context
+    UriInfo uriInfo;
     AdminService adminService;
     public AdminApi() {
         adminService = new AdminService();
@@ -42,7 +46,7 @@ public class AdminApi {
     @POST
     @Consumes({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
     public Response postAdmin( AdminPostRequest adminPostRequest) {
-        return Response.ok().entity(adminService.addAdmin(adminPostRequest)).build();
+        return Response.created( uriInfo.getBaseUri() ).entity(adminService.addAdmin(adminPostRequest)).build();
     }
 
     @PUT

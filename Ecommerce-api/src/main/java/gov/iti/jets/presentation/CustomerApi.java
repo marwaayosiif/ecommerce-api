@@ -1,36 +1,22 @@
 package gov.iti.jets.presentation;
 
-import gov.iti.jets.services.dto.admin.AdminGetResponse;
 import gov.iti.jets.services.dto.customer.CustomerGetResponse;
 import gov.iti.jets.services.dto.customer.CustomerOrderGetResponse;
 import gov.iti.jets.services.dto.customer.CustomerOrderPostRequest;
 import gov.iti.jets.services.dto.customer.CustomerPostRequest;
 import gov.iti.jets.services.service.customer.CustomerService;
 import gov.iti.jets.services.service.error.NotFoundException;
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;
-import jakarta.json.bind.Jsonb;
-import jakarta.json.bind.JsonbBuilder;
-import jakarta.json.bind.annotation.JsonbCreator;
-import jakarta.json.stream.JsonParser;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
+
+import java.util.Arrays;
 import java.util.List;
 
 @Path( "customers" )
 public class CustomerApi {
     @Context UriInfo uriInfo;
     CustomerService customerService = new CustomerService();
-    private Object field;
-    private int id;
 
     @GET
     @Produces( {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML} )
@@ -47,7 +33,14 @@ public class CustomerApi {
         if(allCustomers.isEmpty()){
             throw new NotFoundException("There is no customers");
         }
-        return Response.ok().entity( allCustomers ).build();
+        Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
+        Link next = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder().path( "id" ) ).rel( "next" ).build();
+
+        for ( CustomerGetResponse c :
+                allCustomers   ) {
+            c.setLinks( List.of( self,next ) );
+        }
+        return Response.ok(allCustomers).build();
     }
 
     @GET
@@ -58,6 +51,9 @@ public class CustomerApi {
         if(customerById == null){
             throw new NotFoundException( "There is no customer with id = "+id );
         }
+        Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
+        Link next = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder().path( "orders" ) ).rel( "next" ).build();
+        customerById.setLinks( List.of(self,next) );
         return Response.ok().entity( customerById ).build();
     }
 
@@ -69,6 +65,12 @@ public class CustomerApi {
         if(ordersOfCustomer.isEmpty()){
             throw new NotFoundException("There is no orders for customer with id  = "+id);
         }
+        Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
+        Link next = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder().path( "id" ) ).rel( "next" ).build();
+        ordersOfCustomer.forEach( order ->{
+            order.setLinks( List.of(self,next) );
+        } );
+
         return Response.ok().entity( ordersOfCustomer ).build();
     }
 
@@ -76,11 +78,13 @@ public class CustomerApi {
     @Path( "{id}/orders/{oid}" )
     @Produces( {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML} )
     public Response getOrderByIdOfCustomer( @PathParam ( "id" )int id , @PathParam( "oid" )int oid){
-        Object orderByIdOfCustomer = customerService.getOrderByIdOfCustomer( id, oid );
+        CustomerOrderGetResponse orderByIdOfCustomer = customerService.getOrderByIdOfCustomer( id, oid );
         if(orderByIdOfCustomer == null){
 
             throw new NotFoundException( "There is no order with id = "+oid+" for customer with id = "+id );
         }
+        Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
+        orderByIdOfCustomer.setLinks( List.of(self) );
         return Response.ok().entity( orderByIdOfCustomer ).build();
     }
 
@@ -129,34 +133,45 @@ public class CustomerApi {
         if(customerGetResponse == null){
             throw new NotFoundException( "Cannot edit customer with id = "+id );
         }
+        Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
+        Link next = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder().path( "orders" ) ).rel( "next" ).build();
+        customerGetResponse.setLinks( List.of(self,next) );
         return Response.ok().entity( customerGetResponse ).build();
     }
 
-    //TODO PATCH
+
     @PATCH
     @Path( "{id}" )
     @Produces( {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML,MediaType.TEXT_PLAIN} )
     @Consumes( {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML,MediaType.TEXT_PLAIN} )
-    public Response editCustomerWithPatch( @QueryParam( "fields" ) String field,
+    public Response editCustomerWithPatch(  String field,
                                            @PathParam( "id" )int id ){
-
         CustomerGetResponse customerGetResponse = customerService.editCustomerWithPatch( field, id );
         if(customerGetResponse == null){
             throw new NotFoundException( "Cannot edit customer with id = "+id );
         }
+        Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
+        Link next = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder().path( "orders" ) ).rel( "next" ).build();
+        customerGetResponse.setLinks( List.of(self,next) );
         return Response.ok().entity( customerGetResponse ).build();
     }
 
-    //TODO doest print
+
     @PUT
     @Path( "{id}/orders/{oid}" )
     @Produces( {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML,MediaType.TEXT_PLAIN} )
     @Consumes( {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML,MediaType.TEXT_PLAIN} )
     public Response editOrderToCustomer( CustomerOrderPostRequest customerOrderPostRequest,@PathParam( "id" )int id ,@PathParam("oid")int oid ){
         CustomerOrderGetResponse customerOrderGetResponse = customerService.editOrderToCustomer( customerOrderPostRequest, id, oid );
-        if(customerOrderPostRequest == null){
+        System.out.println(customerOrderGetResponse == null);
+        if(customerOrderGetResponse == null){
+            System.out.println("IN IF");
             throw new NotFoundException( "Cannot edit order with id = "+oid+" for customer with id = "+id );
         }
+        Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
+        System.out.println(self);
+        System.out.println(customerOrderGetResponse);
+        customerOrderGetResponse.setLinks( List.of(self) );
         return Response.ok().entity( customerOrderGetResponse ).build();
     }
 }

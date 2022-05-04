@@ -1,10 +1,18 @@
 package gov.iti.jets.services.dto.customer;
 
+import jakarta.ws.rs.core.Link;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class CustomerGetResponse {
     private Integer id;
     private String name;
     private String email;
     private String phone;
+    @XmlJavaTypeAdapter( Link.JaxbAdapter.class )
+    private List<Link> links = new ArrayList<>();
 
     public CustomerGetResponse( Integer id, String name, String email, String phone ) {
         this.id = id;
@@ -46,6 +54,14 @@ public class CustomerGetResponse {
 
     public void setPhone( String phone ) {
         this.phone = phone;
+    }
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks( List<Link> links ) {
+        this.links = links;
     }
 
     @Override

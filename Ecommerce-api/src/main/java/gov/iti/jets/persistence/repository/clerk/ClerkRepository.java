@@ -80,9 +80,12 @@ public class ClerkRepository {
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Clerk clerk = em.find(Clerk.class, id);
+        System.out.println("before if");
         if(clerk == null){
+            System.out.println("in if");
             return null;
         }
+        System.out.println("After if");
         em.remove( clerk );
         em.getTransaction().commit();
         em.close();
