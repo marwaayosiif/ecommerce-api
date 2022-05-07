@@ -1,9 +1,7 @@
 # Ecommerce API
 
->An Ecommerce web application built using Jsp, Jakarta Servlets and JPA as our second project at the Information Technology Institute. 
-> It takes full advantage of Tailwind component to build our view in a simple way .
-# 🏛 Architecture
-This software project was built using a layered architecture. The following diagram demonstrates an example use case that goes through all the layers.
+>An ecommerce api using restful web services in project and soap web services in another project, providing some method for another developer who can use them to facilitate his job in creating an ecommerce app using this methods.
+
 
 
 # 🏛 Database Schema
@@ -64,24 +62,26 @@ This software project was built using a layered architecture. The following diag
  
 
 # 🛠 How to run
-**Maven**
 
-* Change the configuration of tomcat in `pom.xml`.
-* Deploy the application using the following maven command:
-```
-mvn clean compile tomcat7:redeploy
-```
 
 **MySQL**
 * Create a database user using MySQL Commandline 8.0 using the following commands:
 ```sql
-CREATE USER 'manager'@'localhost' IDENTIFIED BY 'manager';
-GRANT ALL PRIVILEGES ON ecommerce . * TO 'manager'@'localhost';
+CREATE USER 'apiuser'@'localhost' IDENTIFIED BY 'apiuser';
+GRANT ALL PRIVILEGES ON api . * TO 'apiuser'@'localhost';
 FLUSH PRIVILEGES;
 ```
-* Go to `resources/META-INF/persistence.xml` and make the value of `hibernate.hbm2ddl.auto` property equal `create`. 
+* Go to `resources/META-INF/persistence.xml` in any project and make the value of `hibernate.hbm2ddl.auto` property equal `create`. 
 * Run DatabasePopulator.java file
 ```
-mvn clean compile exec:java -Dexec.mainClass=gov.iti.jets.repository.util.DatabasePopulator
+mvn clean compile exec:java -Dexec.mainClass=gov.iti.jets.persistence.repository.util.Populator
 ```
 * Go back to `resources/META-INF/persistence.xml` and make the value of `hibernate.hbm2ddl.auto` property equal `update`.
+
+**Maven**
+
+* Change the configuration of tomcat in `pom.xml` in both project.
+* Deploy the application using the following maven command:
+```
+mvn clean compile tomcat7:redeploy
+```

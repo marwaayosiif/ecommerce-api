@@ -8,8 +8,8 @@
                  <properties>
                      <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/api"/>
                      <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-                     <property name="jakarta.persistence.jdbc.user" value="api"/>
-                     <property name="jakarta.persistence.jdbc.password" value=""/>
+                     <property name="jakarta.persistence.jdbc.user" value="apiuser"/>
+                     <property name="jakarta.persistence.jdbc.password" value="apiuser"/>
                      <property name="hibernate.show_sql" value="true"/>
                      <property name="hibernate.format_sql" value="true"/>
                      <property name="dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
