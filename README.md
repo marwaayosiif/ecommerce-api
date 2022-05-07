@@ -6,7 +6,7 @@
 
 [Postman-documentation](https://documenter.getpostman.com/view/14515926/UyxdL95S)
 
-[SoupUi-documentation](https://drive.google.com/file/d/11EgXEaOBfLTiIZVP1jWqTfwzR0MEEST3/view?usp=sharing)
+[SoupUi-documentation](Ecommerce-SOAP\src\main\resources\Ecommerce-soapui-project.xml)
 
 
 # 🏛 Database Schema
