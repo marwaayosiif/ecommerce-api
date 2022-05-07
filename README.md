@@ -6,6 +6,9 @@
 
 [Postman-documentation](https://documenter.getpostman.com/view/14515926/UyxdL95S)
 
+[SoupUi-documentation](https://drive.google.com/file/d/11EgXEaOBfLTiIZVP1jWqTfwzR0MEEST3/view?usp=sharing)
+
+
 # 🏛 Database Schema
 ![apii](https://user-images.githubusercontent.com/43884139/167253726-282cedbe-6ec3-4506-8771-34393a471eea.jpg)
 
