@@ -7,6 +7,8 @@ This software project was built using a layered architecture. The following diag
 
 
 # 🏛 Database Schema
+![apii](https://user-images.githubusercontent.com/43884139/167253726-282cedbe-6ec3-4506-8771-34393a471eea.jpg)
+
 
 
 # ⚙ Features
