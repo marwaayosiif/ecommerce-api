@@ -2,7 +2,9 @@
 
 >An ecommerce api using restful web services in project and soap web services in another project, providing some method for another developer who can use them to facilitate his job in creating an ecommerce app using this methods.
 
+# 📗 Documentation
 
+[Postman-documentation](https://documenter.getpostman.com/view/14515926/UyxdL95S)
 
 # 🏛 Database Schema
 ![apii](https://user-images.githubusercontent.com/43884139/167253726-282cedbe-6ec3-4506-8771-34393a471eea.jpg)
