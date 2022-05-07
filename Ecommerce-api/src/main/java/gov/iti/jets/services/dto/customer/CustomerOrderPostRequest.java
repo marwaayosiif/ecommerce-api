@@ -2,12 +2,15 @@ package gov.iti.jets.services.dto.customer;
 
 import gov.iti.jets.persistence.entity.Customer;
 import gov.iti.jets.persistence.entity.Product;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+@XmlRootElement
 public class CustomerOrderPostRequest {
 
     private Integer totalPrice;

@@ -3,13 +3,11 @@ package gov.iti.jets.presentation;
 import gov.iti.jets.services.dto.admin.AdminGetResponse;
 import gov.iti.jets.services.dto.admin.AdminPostRequest;
 import gov.iti.jets.services.dto.admin.AdminPutRequest;
+import gov.iti.jets.services.dto.clerk.ClerkGetResponse;
 import gov.iti.jets.services.service.admin.AdminService;
 import gov.iti.jets.services.service.error.NotFoundException;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
+import jakarta.ws.rs.core.*;
 
 import java.util.List;
 
@@ -29,7 +27,9 @@ public class AdminApi {
         if(allAdmins.isEmpty()){
             throw new NotFoundException("There is no Admins");
         }
-        return Response.ok().entity(allAdmins).build();
+        GenericEntity<List<AdminGetResponse>> entity = new GenericEntity<List<AdminGetResponse>>(allAdmins) {};
+
+        return Response.ok().entity(entity).build();
     }
 
     @GET
@@ -52,6 +52,7 @@ public class AdminApi {
     @PUT
     @Path( "{id}" )
     @Consumes({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
     public Response putAdminById( @PathParam( "id" ) int id, AdminPutRequest adminPutRequest) {
         AdminGetResponse adminGetResponse = adminService.editAdmin( id, adminPutRequest );
         if(adminGetResponse == null){
@@ -61,7 +62,7 @@ public class AdminApi {
     }
 
     @DELETE
-    @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.TEXT_PLAIN})
     public Response deleteAllAdmins() {
         String s = adminService.deleteAllAdmins();
         if(s == null){
@@ -72,7 +73,7 @@ public class AdminApi {
 
     @DELETE
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.TEXT_PLAIN})
     public Response deleteAdminById(@PathParam("id") int id) {
         String s = adminService.deleteAdmin( id );
         if(s == null){

@@ -1,5 +1,8 @@
 package gov.iti.jets.services.dto.admin;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class AdminPutRequest {
 
     private String name;

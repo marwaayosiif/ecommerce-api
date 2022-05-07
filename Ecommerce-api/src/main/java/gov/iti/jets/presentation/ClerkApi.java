@@ -1,15 +1,16 @@
 package gov.iti.jets.presentation;
 
+import gov.iti.jets.persistence.entity.Clerk;
 import gov.iti.jets.services.dto.admin.AdminGetResponse;
+import gov.iti.jets.services.dto.clerk.ClerkGetResponse;
 import gov.iti.jets.services.dto.clerk.ClerkPostRequest;
 import gov.iti.jets.services.dto.clerk.ClerkPutRequest;
 import gov.iti.jets.services.service.clerk.ClerkService;
 import gov.iti.jets.services.service.error.NotFoundException;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
+import jakarta.ws.rs.core.*;
+
+import java.util.List;
 
 @Path( "clerks" )
 public class ClerkApi {
@@ -22,13 +23,15 @@ public class ClerkApi {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 
     public Response getAllClerks() {
-        if(clerkService.getAllClerks().isEmpty()){
+        List<ClerkGetResponse> allClerks = clerkService.getAllClerks();
+        if( allClerks.isEmpty()){
             throw new NotFoundException("There is no clerks");
         }
-        return Response.ok().entity(clerkService.getAllClerks()).build();
+        GenericEntity<List<ClerkGetResponse>> entity = new GenericEntity<List<ClerkGetResponse>>(allClerks) {};
+        return Response.ok().entity(entity).build();
     }
 
     @GET
@@ -58,7 +61,7 @@ public class ClerkApi {
     }
 
     @DELETE
-    @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.TEXT_PLAIN})
     public Response deleteAllClerks() {
         String s = clerkService.deleteAllClerks();
         if(s == null){
@@ -69,7 +72,7 @@ public class ClerkApi {
 
     @DELETE
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.TEXT_PLAIN})
     public Response deleteClerkById(@PathParam("id") int id) {
         clerkService.deleteClerk( id );
         if( clerkService.deleteClerk(id ) == null){

@@ -4,13 +4,11 @@ import gov.iti.jets.services.dto.admin.AdminGetResponse;
 import gov.iti.jets.services.dto.category.CategoryGetResponse;
 import gov.iti.jets.services.dto.category.CategoryPostRequest;
 import gov.iti.jets.services.dto.category.CategoryPutRequest;
+import gov.iti.jets.services.dto.clerk.ClerkGetResponse;
 import gov.iti.jets.services.service.category.CategoryService;
 import gov.iti.jets.services.service.error.NotFoundException;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
+import jakarta.ws.rs.core.*;
 
 import java.util.List;
 
@@ -25,7 +23,9 @@ public class CategoryApi {
         if(allCategory.isEmpty()){
             throw new NotFoundException("There is no categories");
         }
-        return Response.ok().entity( allCategory ).build();
+        GenericEntity<List<CategoryGetResponse>> entity = new GenericEntity<List<CategoryGetResponse>>(allCategory) {};
+
+        return Response.ok().entity( entity ).build();
     }
 
     @GET
@@ -71,6 +71,7 @@ public class CategoryApi {
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     @Path( "{id}" )
     public Response editCategory( CategoryPutRequest categoryPutRequest , @PathParam( "id" ) int id ){
+        System.out.println(categoryPutRequest);
         CategoryGetResponse categoryGetResponse = categoryService.editCategory( categoryPutRequest, id );
         if(categoryGetResponse == null){
             throw new NotFoundException( "Cannot edit category with id = "+id );

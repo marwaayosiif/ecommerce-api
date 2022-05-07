@@ -1,11 +1,13 @@
 package gov.iti.jets.services.dto.category;
 
 import gov.iti.jets.persistence.entity.Product;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@XmlRootElement
 public class CategoryGetResponse {
     private int id;
     private String name;

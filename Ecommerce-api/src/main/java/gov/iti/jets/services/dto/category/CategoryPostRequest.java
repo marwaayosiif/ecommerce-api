@@ -1,5 +1,8 @@
 package gov.iti.jets.services.dto.category;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class CategoryPostRequest {
     private String name;
 

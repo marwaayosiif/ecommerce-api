@@ -1,8 +1,10 @@
 package gov.iti.jets.services.dto.product;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@XmlRootElement
 public class ProductPutRequest {
     private String description;
     private String name;

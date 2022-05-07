@@ -1,5 +1,8 @@
 package gov.iti.jets.services.dto.clerk;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ClerkGetResponse {
     private int id;
     private String name;

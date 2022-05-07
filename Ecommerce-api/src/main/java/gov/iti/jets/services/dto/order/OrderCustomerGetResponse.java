@@ -1,10 +1,11 @@
 package gov.iti.jets.services.dto.order;
 
 import gov.iti.jets.persistence.entity.Order;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.util.HashSet;
 import java.util.Set;
-
+@XmlRootElement
 public class OrderCustomerGetResponse {
     private Integer id;
     private String name;

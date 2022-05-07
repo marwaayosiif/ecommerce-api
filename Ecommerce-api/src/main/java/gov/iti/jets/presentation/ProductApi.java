@@ -1,6 +1,7 @@
 package gov.iti.jets.presentation;
 
 import gov.iti.jets.services.dto.admin.AdminGetResponse;
+import gov.iti.jets.services.dto.clerk.ClerkGetResponse;
 import gov.iti.jets.services.dto.product.ProductGetResponse;
 import gov.iti.jets.services.dto.product.ProductPostRequest;
 import gov.iti.jets.services.dto.product.ProductPutRequest;
@@ -24,7 +25,9 @@ public class ProductApi {
         if(allProducts.isEmpty()){
             throw new NotFoundException("There is no products");
         }
-        return Response.ok().entity( allProducts ).build();
+        GenericEntity<List<ProductGetResponse>> entity = new GenericEntity<List<ProductGetResponse>>(allProducts) {};
+
+        return Response.ok().entity( entity ).build();
     }
 
     @GET
@@ -53,7 +56,7 @@ public class ProductApi {
 
     @DELETE
     @Path( "{id}" )
-    @Produces( {MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON} )
+    @Produces( {MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON , MediaType.TEXT_PLAIN} )
     public Response deleteProductById( @PathParam ( "id" ) int id){
         String s = productService.deleteProductById(id);
         if(s == null){
@@ -71,6 +74,8 @@ public class ProductApi {
 
     @PUT
     @Path( "{id}" )
+    @Produces( {MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON} )
+    @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response editProduct( @PathParam( "id" )int id, ProductPutRequest productPutRequest){
         ProductGetResponse productGetResponse = productService.editProduct( id, productPutRequest );
         if(productGetResponse == null){

@@ -83,6 +83,7 @@ public class CategoryRepository {
             products.add( em.find( Product.class  , productId) );
         }
         category.setProducts( products );
+        category.setName( categoryPutRequest.getName() );
         category = em.merge( category );
         em.getTransaction().commit();
         em.close();

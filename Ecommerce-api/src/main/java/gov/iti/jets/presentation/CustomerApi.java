@@ -1,5 +1,6 @@
 package gov.iti.jets.presentation;
 
+import gov.iti.jets.services.dto.clerk.ClerkGetResponse;
 import gov.iti.jets.services.dto.customer.CustomerGetResponse;
 import gov.iti.jets.services.dto.customer.CustomerOrderGetResponse;
 import gov.iti.jets.services.dto.customer.CustomerOrderPostRequest;
@@ -38,9 +39,10 @@ public class CustomerApi {
 
         for ( CustomerGetResponse c :
                 allCustomers   ) {
-            c.setLinks( List.of( self,next ) );
+            c.setLinks( List.of( self.toString(),next.toString() ) );
         }
-        return Response.ok(allCustomers).build();
+        GenericEntity<List<CustomerGetResponse>> entity = new GenericEntity<List<CustomerGetResponse>>(allCustomers) {};
+        return Response.ok(entity).build();
     }
 
     @GET
@@ -53,7 +55,7 @@ public class CustomerApi {
         }
         Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
         Link next = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder().path( "orders" ) ).rel( "next" ).build();
-        customerById.setLinks( List.of(self,next) );
+        customerById.setLinks( List.of(self.toString(),next.toString()) );
         return Response.ok().entity( customerById ).build();
     }
 
@@ -68,10 +70,10 @@ public class CustomerApi {
         Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
         Link next = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder().path( "id" ) ).rel( "next" ).build();
         ordersOfCustomer.forEach( order ->{
-            order.setLinks( List.of(self,next) );
+            order.setLink( List.of(self.toString(),next.toString()) );
         } );
-
-        return Response.ok().entity( ordersOfCustomer ).build();
+        GenericEntity<List<CustomerOrderGetResponse>> entity = new GenericEntity<List<CustomerOrderGetResponse>>(ordersOfCustomer) {};
+        return Response.ok().entity( entity ).build();
     }
 
     @GET
@@ -84,7 +86,7 @@ public class CustomerApi {
             throw new NotFoundException( "There is no order with id = "+oid+" for customer with id = "+id );
         }
         Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
-        orderByIdOfCustomer.setLinks( List.of(self) );
+        orderByIdOfCustomer.setLink( List.of(self.toString()) );
         return Response.ok().entity( orderByIdOfCustomer ).build();
     }
 
@@ -135,7 +137,7 @@ public class CustomerApi {
         }
         Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
         Link next = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder().path( "orders" ) ).rel( "next" ).build();
-        customerGetResponse.setLinks( List.of(self,next) );
+        customerGetResponse.setLinks( List.of(self.toString(),next.toString()) );
         return Response.ok().entity( customerGetResponse ).build();
     }
 
@@ -152,7 +154,7 @@ public class CustomerApi {
         }
         Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
         Link next = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder().path( "orders" ) ).rel( "next" ).build();
-        customerGetResponse.setLinks( List.of(self,next) );
+        customerGetResponse.setLinks( List.of(self.toString(),next.toString()) );
         return Response.ok().entity( customerGetResponse ).build();
     }
 
@@ -171,7 +173,7 @@ public class CustomerApi {
         Link self = Link.fromUriBuilder( uriInfo.getAbsolutePathBuilder() ).rel( "self" ).build();
         System.out.println(self);
         System.out.println(customerOrderGetResponse);
-        customerOrderGetResponse.setLinks( List.of(self) );
+        customerOrderGetResponse.setLink( List.of(self.toString()) );
         return Response.ok().entity( customerOrderGetResponse ).build();
     }
 }

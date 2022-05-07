@@ -1,8 +1,11 @@
 package gov.iti.jets.services.dto.category;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement
 public class CategoryPutRequest {
     private String name;
     private List<Integer> productId = new ArrayList<>();

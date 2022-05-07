@@ -1,5 +1,8 @@
 package gov.iti.jets.services.dto.product;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ProductCategoryGetResponse {
     private int id;
     private String name;

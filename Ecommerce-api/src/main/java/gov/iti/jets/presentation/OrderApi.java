@@ -1,10 +1,12 @@
 package gov.iti.jets.presentation;
 
 import gov.iti.jets.services.dto.admin.AdminGetResponse;
+import gov.iti.jets.services.dto.clerk.ClerkGetResponse;
 import gov.iti.jets.services.dto.order.OrderGetResponse;
 import gov.iti.jets.services.service.error.NotFoundException;
 import gov.iti.jets.services.service.order.OrderService;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.GenericEntity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -21,7 +23,9 @@ public class OrderApi {
         if(allOrders.isEmpty()){
             throw new NotFoundException("There is no orders");
         }
-        return Response.ok().entity( allOrders ).build();
+        GenericEntity<List<OrderGetResponse>> entity = new GenericEntity<List<OrderGetResponse>>(allOrders) {};
+
+        return Response.ok().entity( entity ).build();
     }
 
     @GET

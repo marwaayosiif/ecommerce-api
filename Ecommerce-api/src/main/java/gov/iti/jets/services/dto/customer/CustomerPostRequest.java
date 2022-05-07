@@ -1,5 +1,8 @@
 package gov.iti.jets.services.dto.customer;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class CustomerPostRequest {
     private String name;
     private String email;

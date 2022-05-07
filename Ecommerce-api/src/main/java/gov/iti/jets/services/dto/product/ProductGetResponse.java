@@ -2,12 +2,14 @@ package gov.iti.jets.services.dto.product;
 
 import gov.iti.jets.persistence.entity.Category;
 import jakarta.ws.rs.core.Link;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@XmlRootElement
 public class ProductGetResponse {
     private Integer id;
     private String description;

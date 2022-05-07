@@ -1,6 +1,8 @@
 package gov.iti.jets.services.dto.product;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class ProductPostRequest {
     private String description;
     private String name;
